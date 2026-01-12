@@ -6,7 +6,7 @@
 
 import mongoose from "mongoose"
 import { ClassTimetable } from "@/lib/models/campus.model"
-import { classTimetables } from "@/lib/data/class-timetables"
+
 
 async function seedClassTimetables() {
   try {

@@ -7,7 +7,7 @@
 import { NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/mongodb"
 import { ClassTimetable } from "@/lib/models/campus.model"
-import { classTimetables } from "@/lib/data/class-timetables"
+
 
 export async function GET() {
   try {
