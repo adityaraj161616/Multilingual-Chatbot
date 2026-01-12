@@ -228,12 +228,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt",
   },
-  secret:
-    process.env.AUTH_SECRET ||
-    process.env.NEXTAUTH_SECRET ||
-    (process.env.NODE_ENV === "development"
-      ? "development-secret-please-change-in-production-min-32-chars"
-      : undefined),
+  secret: process.env.AUTH_SECRET, // Removed fallbacks - AUTH_SECRET must be explicitly set in production
   debug: process.env.NODE_ENV === "development",
   trustHost: true,
 })
