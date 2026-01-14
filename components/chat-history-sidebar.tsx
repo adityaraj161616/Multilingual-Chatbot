@@ -107,17 +107,20 @@ export function ChatHistorySidebar() {
           </Button>
         </motion.div>
       </SheetTrigger>
-      <SheetContent side="left" className="w-80 sm:w-96 bg-white/90 dark:bg-black/90 backdrop-blur-2xl border-white/20">
-        <SheetHeader>
-          <SheetTitle className="flex items-center gap-2 text-lg">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center">
+      <SheetContent
+        side="left"
+        className="w-72 sm:w-80 md:w-96 bg-white/90 dark:bg-black/90 backdrop-blur-2xl border-white/20 p-3 sm:p-6"
+      >
+        <SheetHeader className="mb-4">
+          <SheetTitle className="flex items-center gap-2 text-base sm:text-lg">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center shrink-0">
               <History className="h-4 w-4 text-white" />
             </div>
-            Chat History
+            <span className="truncate">Chat History</span>
           </SheetTitle>
         </SheetHeader>
 
-        <div className="mt-6">
+        <div className="mt-4">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-12">
               <Loader2 className="h-8 w-8 animate-spin text-primary mb-3" />
@@ -136,7 +139,7 @@ export function ChatHistorySidebar() {
               <p className="text-xs text-muted-foreground">End a conversation to save it here</p>
             </motion.div>
           ) : (
-            <ScrollArea className="h-[calc(100vh-140px)]">
+            <ScrollArea className="h-[calc(100vh-160px)]">
               <AnimatePresence>
                 <div className="space-y-2 pr-2">
                   {chatHistory.map((chat, index) => (
@@ -146,33 +149,36 @@ export function ChatHistorySidebar() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ delay: index * 0.05 }}
-                      className="group p-4 rounded-xl bg-white/50 dark:bg-white/5 border border-white/20 hover:bg-white/80 dark:hover:bg-white/10 transition-all hover:shadow-md cursor-pointer"
+                      className="group p-3 sm:p-4 rounded-xl bg-white/50 dark:bg-white/5 border border-white/20 hover:bg-white/80 dark:hover:bg-white/10 transition-all hover:shadow-md"
                     >
-                      <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start justify-between gap-2 sm:gap-3">
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium truncate mb-1.5">{getDisplayTitle(chat)}</p>
-                          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                            <span className="flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              {formatDistanceToNow(new Date(chat.createdAt), { addSuffix: true })}
+                          <p className="text-xs sm:text-sm font-medium truncate mb-1.5">{getDisplayTitle(chat)}</p>
+                          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 text-xs text-muted-foreground">
+                            <span className="flex items-center gap-1 whitespace-nowrap">
+                              <Clock className="h-3 w-3 shrink-0" />
+                              <span className="truncate">
+                                {formatDistanceToNow(new Date(chat.createdAt), { addSuffix: true })}
+                              </span>
                             </span>
-                            <span className="flex items-center gap-1">
-                              <MessageSquare className="h-3 w-3" />
+                            <span className="flex items-center gap-1 whitespace-nowrap">
+                              <MessageSquare className="h-3 w-3 shrink-0" />
                               {chat.messages.length}
                             </span>
                           </div>
                         </div>
-                        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="shrink-0">
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity bg-red-500/10 hover:bg-red-500/20 rounded-lg"
+                            className="h-8 w-8 transition-opacity bg-red-500/10 hover:bg-red-500/20 rounded-lg opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                             onClick={(e) => {
                               e.stopPropagation()
                               deleteChat(chat._id)
                             }}
+                            title="Delete chat"
                           >
-                            <Trash2 className="h-4 w-4 text-red-500" />
+                            <Trash2 className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-red-500" />
                           </Button>
                         </motion.div>
                       </div>

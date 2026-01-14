@@ -204,32 +204,31 @@ export default function ChatPage() {
         {/* Main Chat Container */}
         <div className="flex-1 flex flex-col bg-card rounded-2xl border border-border shadow-xl overflow-hidden">
           {/* Header - Redesigned for clarity and spacing */}
-          <header className="flex items-center justify-between p-5 sm:p-6 border-b border-border bg-card shrink-0 gap-4">
-            <div className="flex items-center gap-4 flex-1 min-w-0">
+          <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-6 border-b border-border bg-card shrink-0 gap-4">
+            <div className="flex items-center gap-3 w-full sm:w-auto sm:flex-1 min-w-0">
               <Link href="/">
                 <Button variant="ghost" size="icon" className="shrink-0 h-10 w-10 hover:bg-muted">
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
               </Link>
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center shrink-0 shadow-md shadow-primary/20">
-                  <MessageSquare className="h-5 w-5 text-primary-foreground" />
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 sm:flex-none">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-primary flex items-center justify-center shrink-0 shadow-md shadow-primary/20">
+                  <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5 text-primary-foreground" />
                 </div>
                 <div className="min-w-0">
-                  <h1 className="font-semibold text-base truncate">Campus Assistant</h1>
-                  <p className="text-xs text-muted-foreground font-medium">Educational Support</p>
+                  <h1 className="font-semibold text-sm sm:text-base truncate">Campus Assistant</h1>
+                  <p className="text-xs text-muted-foreground font-medium leading-tight">Educational Support</p>
                 </div>
               </div>
             </div>
 
-            {/* Right side controls - improved spacing */}
-            <div className="flex items-center gap-3 flex-wrap-reverse sm:flex-wrap justify-end">
+            <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto justify-end flex-wrap sm:flex-nowrap">
               <Select value={language} onValueChange={(val) => setLanguage(val as Language)} disabled={isChatActive}>
                 <SelectTrigger
-                  className="w-[140px] text-sm border border-border hover:bg-muted transition-colors"
+                  className="text-xs sm:text-sm border border-border hover:bg-muted transition-colors h-9 sm:h-10 px-2 sm:px-3 w-auto"
                   disabled={isChatActive}
                 >
-                  <Globe className="h-4 w-4 mr-2 shrink-0" />
+                  <Globe className="h-3.5 w-3.5 sm:h-4 sm:w-4 mr-1.5 shrink-0" />
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -247,9 +246,9 @@ export default function ChatPage() {
                     variant="ghost"
                     size="sm"
                     onClick={handleEndConversation}
-                    className="text-xs h-9 text-destructive hover:text-destructive hover:bg-destructive/10 shrink-0"
+                    className="text-xs h-9 text-destructive hover:text-destructive hover:bg-destructive/10 shrink-0 px-2"
                   >
-                    <XCircle className="h-4 w-4 mr-1.5" />
+                    <XCircle className="h-4 w-4 mr-0 sm:mr-1.5" />
                     <span className="hidden sm:inline">New Chat</span>
                   </Button>
                 )}
@@ -258,11 +257,11 @@ export default function ChatPage() {
               {session ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-10 w-10 shrink-0 hover:bg-muted">
-                      <Avatar className="h-8 w-8">
+                    <Button variant="ghost" size="icon" className="h-9 w-9 sm:h-10 sm:w-10 shrink-0 hover:bg-muted">
+                      <Avatar className="h-7 w-7 sm:h-8 sm:w-8">
                         <AvatarImage src={session.user.image || ""} />
                         <AvatarFallback className="bg-primary text-primary-foreground text-xs font-medium">
-                          {session.user.name?.[0] || <UserIcon className="h-4 w-4" />}
+                          {session.user.name?.[0] || <UserIcon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />}
                         </AvatarFallback>
                       </Avatar>
                     </Button>
@@ -283,7 +282,7 @@ export default function ChatPage() {
                 </DropdownMenu>
               ) : (
                 <Link href="/login">
-                  <Button variant="outline" size="sm" className="shrink-0 bg-transparent">
+                  <Button variant="outline" size="sm" className="shrink-0 bg-transparent h-9 text-xs sm:text-sm">
                     Login
                   </Button>
                 </Link>
