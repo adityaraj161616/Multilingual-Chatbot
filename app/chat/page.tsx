@@ -3,7 +3,6 @@
 import type React from "react"
 import { useState, useRef, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { MessageSquare, Send, Loader2, ArrowLeft, XCircle, Globe } from "lucide-react"
 import Link from "next/link"
@@ -200,10 +199,8 @@ export default function ChatPage() {
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-background/95 flex flex-col">
       <ChatHistorySidebar />
 
-      <div className="flex-1 flex flex-col w-full max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-        {/* Main Chat Container */}
+      <div className="flex-1 flex flex-col w-full max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-0">
         <div className="flex-1 flex flex-col bg-card rounded-2xl border border-border shadow-xl overflow-hidden">
-          {/* Header - Redesigned for clarity and spacing */}
           <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-6 border-b border-border bg-card shrink-0 gap-4">
             <div className="flex items-center gap-3 w-full sm:w-auto sm:flex-1 min-w-0">
               <Link href="/">
@@ -290,11 +287,10 @@ export default function ChatPage() {
             </div>
           </header>
 
-          <ScrollArea className="flex-1 overflow-hidden" ref={scrollRef}>
+          <div className="flex-1 overflow-y-auto" ref={scrollRef}>
             <div className="h-full flex flex-col">
               <div className="flex-1 flex flex-col justify-center px-4 sm:px-8 py-8 sm:py-10">
                 {messages.length <= 1 ? (
-                  // Welcome state - centered
                   <div className="max-w-2xl mx-auto w-full flex flex-col">
                     <AnimatePresence mode="popLayout">
                       {messages.map((message) => (
@@ -306,7 +302,6 @@ export default function ChatPage() {
                     {!isLoading && <QuickReplies onSelect={handleQuickReply} language={language} />}
                   </div>
                 ) : (
-                  // Active chat - full conversation
                   <div className="space-y-4 flex flex-col justify-end h-full">
                     <AnimatePresence mode="popLayout">
                       {messages.map((message) => (
@@ -318,36 +313,36 @@ export default function ChatPage() {
                 )}
               </div>
             </div>
-          </ScrollArea>
+          </div>
+        </div>
+      </div>
 
-          <div className="p-5 sm:p-6 border-t border-border bg-card shrink-0">
-            <div className="max-w-2xl mx-auto w-full">
-              <div className="flex items-end gap-3">
-                <textarea
-                  ref={inputRef}
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder={getPlaceholder(language)}
-                  rows={1}
-                  className="w-full px-4 py-3 rounded-xl border border-input bg-background/50 backdrop-blur-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary min-h-[48px] max-h-[120px] text-sm font-medium placeholder:text-muted-foreground/60 transition-all"
-                  style={{ height: "48px" }}
-                  onInput={(e) => {
-                    const target = e.target as HTMLTextAreaElement
-                    target.style.height = "48px"
-                    target.style.height = Math.min(target.scrollHeight, 120) + "px"
-                  }}
-                />
-                <Button
-                  onClick={() => handleSend()}
-                  disabled={!input.trim() || isLoading || !sessionId}
-                  size="icon"
-                  className="h-12 w-12 shrink-0 rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
-                >
-                  {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
-                </Button>
-              </div>
-            </div>
+      <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 fixed bottom-0 left-1/2 transform -translate-x-1/2 z-50 bg-gradient-to-t from-background via-background to-transparent pt-6 pb-4 sm:pb-6">
+        <div className="max-w-2xl mx-auto w-full">
+          <div className="flex items-end gap-3">
+            <textarea
+              ref={inputRef}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={getPlaceholder(language)}
+              rows={1}
+              className="w-full px-4 py-3 rounded-xl border border-input bg-background/50 backdrop-blur-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary min-h-[48px] max-h-[120px] text-sm font-medium placeholder:text-muted-foreground/60 transition-all"
+              style={{ height: "48px" }}
+              onInput={(e) => {
+                const target = e.target as HTMLTextAreaElement
+                target.style.height = "48px"
+                target.style.height = Math.min(target.scrollHeight, 120) + "px"
+              }}
+            />
+            <Button
+              onClick={() => handleSend()}
+              disabled={!input.trim() || isLoading || !sessionId}
+              size="icon"
+              className="h-12 w-12 shrink-0 rounded-xl shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all"
+            >
+              {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
+            </Button>
           </div>
         </div>
       </div>
@@ -355,7 +350,6 @@ export default function ChatPage() {
   )
 }
 
-// Helper functions
 function getWelcomeMessage(language: Language): string {
   const messages: Record<Language, string> = {
     en: "Welcome to Campus Assistant! Ask me anything about campus life, academics, or student services.",
